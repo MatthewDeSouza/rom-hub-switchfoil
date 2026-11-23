@@ -1,0 +1,45 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1795234589,
+        "narHash": "sha256-f/VVvxf5RsQgWVhUtefoca5ktVg0DA2bnkMOcmSnozo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2786a2a72088ecf32aea5b3ec52099e6a7cff78f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "rom-hub": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795376959,
+        "narHash": "sha256-0Xb0bnCTtZhNhE50Nat6WITwHsApwX5CfTUlA6R3mtg=",
+        "owner": "BlizzHacker",
+        "repo": "rom-hub",
+        "rev": "a563e70dd3792568c97cc8342935d359e0a7a7ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BlizzHacker",
+        "repo": "rom-hub",
+        "rev": "a563e70dd3792568c97cc8342935d359e0a7a7ea",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "rom-hub": "rom-hub"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
