@@ -19,17 +19,17 @@
     "rom-hub": {
       "flake": false,
       "locked": {
-        "lastModified": 1795376959,
-        "narHash": "sha256-0Xb0bnCTtZhNhE50Nat6WITwHsApwX5CfTUlA6R3mtg=",
+        "lastModified": 1795531838,
+        "narHash": "sha256-srEcH6Q6fEQ4IXjH9d3wGcakfpDyytGPeviPZ7D0BuA=",
         "owner": "BlizzHacker",
         "repo": "rom-hub",
-        "rev": "a563e70dd3792568c97cc8342935d359e0a7a7ea",
+        "rev": "3f5180aa336b0c192b86877ea6f3dc59a8075631",
         "type": "github"
       },
       "original": {
         "owner": "BlizzHacker",
         "repo": "rom-hub",
-        "rev": "a563e70dd3792568c97cc8342935d359e0a7a7ea",
+        "rev": "3f5180aa336b0c192b86877ea6f3dc59a8075631",
         "type": "github"
       }
     },

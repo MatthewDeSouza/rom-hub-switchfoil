@@ -7,7 +7,7 @@
     # The plugin runs inside the ROM Hub host, so development and CI use the
     # same host revision ROMarr's Docker image pins.
     rom-hub = {
-      url = "github:BlizzHacker/rom-hub/a563e70dd3792568c97cc8342935d359e0a7a7ea";
+      url = "github:BlizzHacker/rom-hub/3f5180aa336b0c192b86877ea6f3dc59a8075631";
       flake = false;
     };
   };
