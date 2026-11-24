@@ -91,12 +91,14 @@ class OwnfoilTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
 
     def plugin(self, sources, grants=None):
+        fetcher = HttpxFetcher(timeout=30)
+        self.addCleanup(fetcher.close)
         with mock.patch.dict(os.environ, {ENV: URL if grants is None else grants}):
             process = PluginProcess(
                 ROOT,
                 self.manifest,
                 {"sources": sources, "titledb": False},
-                HttpxFetcher(timeout=30),
+                fetcher,
                 timeout=60,
                 allow_unsandboxed=True,
             )

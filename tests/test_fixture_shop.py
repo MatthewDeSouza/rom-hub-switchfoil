@@ -60,12 +60,14 @@ class FixtureShopTests(unittest.TestCase):
         ]
 
     def plugin(self, grants, sources=None):
+        fetcher = HttpxFetcher(timeout=10)
+        self.addCleanup(fetcher.close)
         with mock.patch.dict(os.environ, {ENV: grants}):
             process = PluginProcess(
                 ROOT,
                 self.manifest,
                 {"sources": sources or self.sources(), "titledb": False},
-                HttpxFetcher(timeout=10),
+                fetcher,
                 timeout=30,
                 allow_unsandboxed=True,
             )
