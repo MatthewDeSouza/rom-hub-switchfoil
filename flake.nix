@@ -47,7 +47,7 @@
         ];
       };
 
-      pythonPackagesOverlay = final: prev: {
+      pythonPackagesOverlay = pkgs: final: prev: {
         pyseccomp = final.buildPythonPackage rec {
           pname = "pyseccomp";
           version = "0.1.2";
@@ -57,6 +57,13 @@
             hash = "sha256-DVTvrPcb2kvf0hIz9URLcwy+z1k9YC95bmQSqGgiWL0=";
           };
           build-system = [ final.setuptools ];
+          # pyseccomp finds libseccomp with ctypes.util.find_library, which
+          # finds nothing inside a Nix build or a Nix-built environment.
+          postPatch = lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
+            substituteInPlace pyseccomp.py \
+              --replace-fail 'ctypes.util.find_library("seccomp")' \
+              '"${lib.getLib pkgs.libseccomp}/lib/libseccomp.so.2"'
+          '';
           doCheck = false;
           meta.license = lib.licenses.mit;
         };
@@ -86,7 +93,7 @@
       pythonFor =
         pkgs: name:
         pkgs.${name}.override {
-          packageOverrides = pythonPackagesOverlay;
+          packageOverrides = pythonPackagesOverlay pkgs;
         };
     in
     {
