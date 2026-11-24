@@ -82,7 +82,8 @@ def compare_duplicates(entries: list[Entry]) -> dict[int, str]:
                     word = "smaller" if entry.size < other.size else "larger"
                     parts.append(f"{delta} {word} than {_label(entry, other)}")
             if len(parts) > 2:
-                parts = [*parts[:2], f"{len(parts) - 2} more copies"]
+                more = len(parts) - 2
+                parts = [*parts[:2], f"{more} more {'copy' if more == 1 else 'copies'}"]
             notes[index] = ", ".join(parts)
     return notes
 
