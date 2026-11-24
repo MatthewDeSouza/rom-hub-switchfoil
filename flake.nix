@@ -37,6 +37,15 @@
 
       defaultPython = "python312";
 
+      pluginSource = lib.fileset.toSource {
+        root = ./.;
+        fileset = lib.fileset.unions [
+          ./manifest.toml
+          ./switchfoil
+          ./tests
+        ];
+      };
+
       pythonPackagesOverlay = final: prev: {
         pyseccomp = final.buildPythonPackage rec {
           pname = "pyseccomp";
@@ -90,12 +99,25 @@
         )
       );
 
+      # Each check runs the plugin's own suite against the pinned rom-hub.
       checks = forAllSystems (
         pkgs:
         lib.listToAttrs (
           map (name: {
-            name = "rom-hub-${name}";
-            value = (pythonFor pkgs name).pkgs.rom-hub;
+            name = "tests-${name}";
+            value =
+              pkgs.runCommand "rom-hub-switchfoil-tests-${name}"
+                {
+                  nativeBuildInputs = [ ((pythonFor pkgs name).withPackages (ps: [ ps.rom-hub ])) ];
+                  # The fixture shop test binds 127.0.0.1 only.
+                  __darwinAllowLocalNetworking = true;
+                }
+                ''
+                  cp -r ${pluginSource}/. .
+                  chmod -R u+w .
+                  python3 -m unittest discover -s tests -v
+                  touch $out
+                '';
           }) pythonVersions
         )
       );
