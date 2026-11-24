@@ -29,3 +29,15 @@ check-version:
     echo "manifest version $manifest matches $tag"
 
 ci: lint test check-version
+
+# Run tests/test_ownfoil.py against a running Ownfoil. Needs
+# SWITCHFOIL_OWNFOIL_URL, SWITCHFOIL_OWNFOIL_USER and SWITCHFOIL_OWNFOIL_PASSWORD.
+# Fails rather than skipping when the URL is unset, so a job cannot pass empty.
+ownfoil-test:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ -z "${SWITCHFOIL_OWNFOIL_URL:-}" ]; then
+        echo "SWITCHFOIL_OWNFOIL_URL is not set" >&2
+        exit 1
+    fi
+    python3 -m unittest discover -s tests -p test_ownfoil.py -v
