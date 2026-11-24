@@ -43,6 +43,7 @@
           ./manifest.toml
           ./switchfoil
           ./tests
+          ./tools
         ];
       };
 
@@ -113,6 +114,9 @@
                   __darwinAllowLocalNetworking = true;
                 }
                 ''
+                  # httpx loads a CA bundle even for plain http, and the build
+                  # sandbox points SSL_CERT_FILE at a file that does not exist.
+                  export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
                   cp -r ${pluginSource}/. .
                   chmod -R u+w .
                   python3 -m unittest discover -s tests -v
